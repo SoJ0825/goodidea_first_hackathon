@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Console\Presets\React;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Order;
 
 class OpayController extends Controller {
 
@@ -22,12 +24,29 @@ class OpayController extends Controller {
         return view('addValue',
             [
                 'items' => ['60 Diamonds', '165 Diamonds', '360 Diamonds', '650 Diamonds', '1500 Diamonds'],
-                'price' => [60, 150, 300, 500, 1000 ]
+                'price' => [60, 150, 300, 500, 1000],
             ]);
 
     }
+
+    private function storeOrder(Request $request)
+    {
+
+
+    }
+
     public function sentOrder(Request $request)
     {
+        $name = $request['Name'];
+        $price = $request['Price'];
+        $currency = $request['Currency'];
+        $quantity = $request['Quantity'];
+
+        $merchantID = '2000132';
+        $merchantTradeNo = "KaoTest" . time();
+
+        $returnURL = 'http://182b12c9.ngrok.io/api/getresponse';
+        $clientBackURL = 'http://182b12c9.ngrok.io/home';
         include('AllPay.Payment.Integration.php');
         try
         {
@@ -38,23 +57,32 @@ class OpayController extends Controller {
             $obj->ServiceURL = "https://payment-stage.opay.tw/Cashier/AioCheckOut/V5";         //服務位置
             $obj->HashKey = '5294y06JbISpM5x9';                                            //測試用Hashkey，請自行帶入AllPay提供的HashKey
             $obj->HashIV = 'v77hoKGq4kWxNNIS';                                            //測試用HashIV，請自行帶入AllPay提供的HashIV
-            $obj->MerchantID = '2000132';                                                      //測試用MerchantID，請自行帶入AllPay提供的MerchantID
+            $obj->MerchantID = $merchantID;
             $obj->EncryptType = \EncryptType::ENC_SHA256;                                        //CheckMacValue加密類型，請固定填入1，使用SHA256加密
 
-
             //基本參數(請依系統規劃自行調整)
-            $obj->Send['ReturnURL'] = 'http://e235ecdb.ngrok.io/getresponse';    //付款完成通知回傳的網址
-            $obj->Send['ClientBackURL'] = 'http://e235ecdb.ngrok.io/';
-            $obj->Send['MerchantTradeNo'] = "KaoTest" . time();                                   //訂單編號
+            $obj->Send['ReturnURL'] = $returnURL;   //付款完成通知回傳的網址
+            $obj->Send['ClientBackURL'] = $clientBackURL;
+            $obj->Send['MerchantTradeNo'] = $merchantTradeNo;                                   //訂單編號
             $obj->Send['MerchantTradeDate'] = date('Y/m/d H:i:s');                              //交易時間
-            $obj->Send['TotalAmount'] = (int) $request['Price'];                                             //交易金額
-            $obj->Send['TradeDesc'] = "good to drink";                                 //交易描述
+            $obj->Send['TotalAmount'] = (int) $price;                                            //交易金額
+            $obj->Send['TradeDesc'] = "Good Idea Coin";                                 //交易描述
             $obj->Send['ChoosePayment'] = \PaymentMethod::Credit;                           //付款方式:Credit
 
             //訂單的商品資料
-            array_push($obj->Send['Items'], array('Name' => $request['Name'], 'Price' => (int) $request['Price'],
-                'Currency' => $request['Currency'], 'Quantity' => (int) $request['Quantity'], 'URL' => "none"));
 
+            array_push($obj->Send['Items'], array('Name' => $name, 'price' => (int) $price,
+                'Currency' => $currency, 'Quantity' => (int) $quantity, 'URL' => "none"));
+
+            Order::forceCreate([
+                'user_id' => Auth::user()->id,
+                'MerchantID' => $merchantID,
+                'MerchantTradeNo' => $merchantTradeNo,
+                'Merchandise' => $name,
+                'Quantity' => (int) $quantity,
+                'Unit_price' => (int) $price,
+                'TradeAmt' => (int) $price * (int) $quantity,
+            ]);
 
             //Credit信用卡分期付款延伸參數(可依系統需求選擇是否代入)
             //以下參數不可以跟信用卡定期定額參數一起設定
