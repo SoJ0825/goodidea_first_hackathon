@@ -19,4 +19,5 @@ Route::get('test', 'OpayController@sentToOpay');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/register', 'RegisterController@create');
+Route::post('signin', 'RegisterController@store');
+

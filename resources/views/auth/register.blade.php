@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Sign In</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -20,22 +20,37 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin" method="post" action="{{ route('register') }}">
+<form class="form-signin" method="post" action="signin">
     @csrf
     <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="inputName" class="sr-only">name</label>
+    <input type="name" name="name" class="form-control" placeholder="name" required autofocus>
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <input type="password" name="password" class="form-control" placeholder="Password" required>
+    <label for="confirmPassword" class="sr-only">confirm Your Password</label>
+    <input type="password" name="password_confirmation" class="form-control" placeholder="confirmPassword" required autofocus>
     <div class="checkbox mb-3">
         <label>
             <input type="checkbox" value="remember-me"> Remember me
         </label>
     </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 </form>
+
 </body>
+
 </html>
 
 
