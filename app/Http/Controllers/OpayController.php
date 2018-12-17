@@ -16,7 +16,17 @@ class OpayController extends Controller {
         fwrite($myfile, $txt);
         fclose($myfile);
     }
-    public function sentOrder()
+
+    public function showMenu()
+    {
+        return view('addValue',
+            [
+                'items' => ['60 Diamonds', '165 Diamonds', '360 Diamonds', '650 Diamonds', '1500 Diamonds'],
+                'price' => [60, 150, 300, 500, 1000 ]
+            ]);
+
+    }
+    public function sentOrder(Request $request)
     {
         include('AllPay.Payment.Integration.php');
         try
@@ -37,13 +47,13 @@ class OpayController extends Controller {
             $obj->Send['ClientBackURL'] = 'http://e235ecdb.ngrok.io/';
             $obj->Send['MerchantTradeNo'] = "KaoTest" . time();                                   //訂單編號
             $obj->Send['MerchantTradeDate'] = date('Y/m/d H:i:s');                              //交易時間
-            $obj->Send['TotalAmount'] = 2000;                                             //交易金額
+            $obj->Send['TotalAmount'] = (int) $request['Price'];                                             //交易金額
             $obj->Send['TradeDesc'] = "good to drink";                                 //交易描述
             $obj->Send['ChoosePayment'] = \PaymentMethod::Credit;                           //付款方式:Credit
 
             //訂單的商品資料
-            array_push($obj->Send['Items'], array('Name' => "歐付寶黑芝麻豆漿", 'Price' => (int) "2000",
-                'Currency' => "元", 'Quantity' => (int) "1", 'URL' => "dedwed"));
+            array_push($obj->Send['Items'], array('Name' => $request['Name'], 'Price' => (int) $request['Price'],
+                'Currency' => $request['Currency'], 'Quantity' => (int) $request['Quantity'], 'URL' => "none"));
 
 
             //Credit信用卡分期付款延伸參數(可依系統需求選擇是否代入)

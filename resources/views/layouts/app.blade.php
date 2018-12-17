@@ -58,6 +58,16 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('addValue') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('addValue-form').submit();">
+                                    {{ __('AddValue') }}
+                                </a>
+
+                                <form id="addValue-form" action="{{ route('addValue') }}" method="POST">
+                                    @csrf
+                                </form>
+
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -68,16 +78,7 @@
                                       style="display: none;">
                                     @csrf
                                 </form>
-                                <a class="dropdown-item" href="{{ route('addValue') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('addValue-form').submit();">
-                                    {{ __('AddValue') }}
-                                </a>
 
-                                <form id="addValue-form" action="{{ route('addValue') }}" method="POST"
-                                      style="display: none;">
-                                    @csrf
-                                </form>
                             </div>
                         </li>
                     @endguest

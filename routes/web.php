@@ -15,11 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test', 'OpayController@sentToOpay');
 Route::get('getresponse', 'OpayController@test');
 
 Auth::routes();
 
 Route::get('home', 'HomeController@index')->name('home');
 
-Route::get('addValue', 'OpayController@showOrder')->name('addValue');
+//Route::get('addValue', 'OpayController@showOrder')->name('addValue');
+Route::get('addValue', 'OpayController@showMenu');
+Route::post('addValue', 'OpayController@showMenu')->name('addValue');
+Route::middleware('auth')->post('sentOrder', 'OpayController@sentOrder');
