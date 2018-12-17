@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class OpayController extends Controller {
 
     //
-    public function sentToOpay()
+    public function test()
+    {
+//        Log::info(print_r($_POST));
+        $myfile = fopen("info.txt", "w") or die("Unable to open file!");
+        $txt = print_r($_POST, true);
+        fwrite($myfile, $txt);
+        fclose($myfile);
+    }
+    public function sentOrder()
     {
         include('AllPay.Payment.Integration.php');
         try
@@ -24,8 +33,9 @@ class OpayController extends Controller {
 
 
             //基本參數(請依系統規劃自行調整)
-            $obj->Send['ReturnURL'] = 'http://localhost/simple_ServerReplyPaymentStatus.php';    //付款完成通知回傳的網址
-            $obj->Send['MerchantTradeNo'] = "Test" . time();                                   //訂單編號
+            $obj->Send['ReturnURL'] = 'http://e235ecdb.ngrok.io/getresponse';    //付款完成通知回傳的網址
+            $obj->Send['ClientBackURL'] = 'http://e235ecdb.ngrok.io/';
+            $obj->Send['MerchantTradeNo'] = "KaoTest" . time();                                   //訂單編號
             $obj->Send['MerchantTradeDate'] = date('Y/m/d H:i:s');                              //交易時間
             $obj->Send['TotalAmount'] = 2000;                                             //交易金額
             $obj->Send['TradeDesc'] = "good to drink";                                 //交易描述

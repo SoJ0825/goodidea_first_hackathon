@@ -1,0 +1,17 @@
+Array
+(
+    [MerchantID] => 2000132
+    [MerchantTradeNo] => DX20181217170948lElk
+    [PayAmt] => 5
+    [PaymentDate] => 2018/12/17 17:11:12
+    [PaymentType] => Credit_CreditCard
+    [PaymentTypeChargeFee] => 1
+    [RedeemAmt] => 0
+    [RtnCode] => 1
+    [RtnMsg] => 交易成功
+    [SimulatePaid] => 0
+    [TradeAmt] => 5
+    [TradeDate] => 2018/12/17 17:10:55
+    [TradeNo] => 1812171710554049
+    [CheckMacValue] => 01D2635F01EDFA28C4DBB873439C1C7F08974B537657F4228290F3AC11C451E0
+)

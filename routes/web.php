@@ -16,8 +16,10 @@ Route::get('/', function () {
 });
 
 Route::get('test', 'OpayController@sentToOpay');
+Route::get('getresponse', 'OpayController@test');
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::post('signin', 'RegisterController@store');
+Route::get('home', 'HomeController@index')->name('home');
 
+Route::get('addValue', 'OpayController@showOrder')->name('addValue');
