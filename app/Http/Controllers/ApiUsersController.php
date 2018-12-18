@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Dirape\Token\Token;
 use App\User;
+use App\Achievement;
 
 class ApiUsersController extends Controller {
 
@@ -29,11 +30,11 @@ class ApiUsersController extends Controller {
 
     public function logout(Request $request)
     {
-            $user = User::find(session('id'));
-            $user->api_token = null;
-            $user->save();
+        $user = User::find(session('id'));
+        $user->api_token = null;
+        $user->save();
 
-            return ['result' => 'true', 'response' => 'Logout success'];
+        return ['result' => 'true', 'response' => 'Logout success'];
 
     }
 
@@ -66,7 +67,23 @@ class ApiUsersController extends Controller {
                 'api_token' => (new Token())->unique('users', 'api_token', 32),
             ]
         );
+
         $user = User::all()->where('email', $request->email)->first();
+
+        Achievement::forceCreate([
+            'user_id' => $user->id,
+            'allWin' => false,
+            'loss10Time' => false,
+            'luckyAce' => false,
+            'poorYou' => false,
+            'lovelyQueen' => false,
+            'winTwice_game1' => false,
+            'play10Time_game1' => false,
+            'winTwice_game2' => false,
+            'play10Time_game2' => false,
+            'winTwice' => false,
+            'play10Time' => false,
+        ]);
 
         return response(['result' => 'true',
             'response' => [
