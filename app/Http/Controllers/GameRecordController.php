@@ -54,7 +54,7 @@ class GameRecordController extends Controller {
         }
         switch ($request['game'])
         {
-            case "Alber":
+            case "Albert":
                 AlberRecord::forceCreate([
                     "user_id" => session('id'),
                     "bankroll" => $coin,

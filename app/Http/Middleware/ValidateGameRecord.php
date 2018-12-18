@@ -20,7 +20,7 @@ class ValidateGameRecord {
             $request->all(),
             [
                 'api_token' => 'required|string|max:32',
-                'game' => 'required|string',
+                'game' => ['required', 'string', 'regex:(Albert|Lester)'],
                 'type' => 'required|string',
             ]
         );
