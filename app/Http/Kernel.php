@@ -62,6 +62,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'login' => \App\Http\Middleware\Login::class,
         'checkApiToken' => \App\Http\Middleware\CheckApiToken::class,
+        'validateGameRecord' => \App\Http\Middleware\ValidateGameRecord::class,
     ];
 
     /**

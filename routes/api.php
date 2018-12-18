@@ -24,5 +24,7 @@ Route::post('register', 'ApiUsersController@store');
 
 Route::middleware('checkApiToken')->group(function () {
     Route::post('logout', 'ApiUsersController@logout');
-    Route::post('addcoin', 'CoinController@addCoin');
+    Route::middleware('validateGameRecord')->post('addcoin', 'CoinController@addCoin');
+    Route::middleware('validateGameRecord')->post('minuscoin', 'CoinController@minusCoin');
 });
+
