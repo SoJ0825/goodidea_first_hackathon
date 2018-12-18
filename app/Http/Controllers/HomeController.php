@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Order;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+        $coin = $user->coin;
+        $orders = Order::all()->where('user_id', $user->id)->where('RtnCode', '1');
+
+        return view('home', ['coin' => $coin, 'orders' => $orders]);
     }
 }

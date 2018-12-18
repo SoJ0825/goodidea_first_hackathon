@@ -6,37 +6,52 @@ use Illuminate\Foundation\Console\Presets\React;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Order;
+use App\User;
 
 class OpayController extends Controller {
 
-    //
-    public function test()
+    protected $menu = [
+        'items' => ['60 Diamonds', '165 Diamonds', '360 Diamonds', '650 Diamonds', '1500 Diamonds'],
+        'price' => [60, 150, 300, 500, 1000],
+    ];
+
+    public function checkOrder()
     {
-//        Log::info(print_r($_POST));
         $myfile = fopen("info.txt", "w") or die("Unable to open file!");
         $txt = print_r($_POST, true);
         fwrite($myfile, $txt);
         fclose($myfile);
+        $order = Order::all()->where('MerchantTradeNo', $_POST['MerchantTradeNo'])->first();
+        $file = fopen("order.txt", "w") or die("Unable to open file!");
+        $txt = print_r($order->Merchandise.'userid:'.$order->user_id, true);//print_r($_POST, true);
+        fwrite($file, $txt);
+        fclose($file);
+        if ($_POST['RtnCode'])
+        {
+            $itemValue = $this->menu['items'][array_search($_POST['PayAmt'], $this->menu['price'])];
+            $bought_coin = preg_replace('/[^0-9]/', '', $itemValue);
+
+            $order->GoodIdeaCoin = $bought_coin;
+            $order->PayAmt = $_POST['PayAmt'];
+            $order->RtnCode = $_POST['RtnCode'];
+            $order->RtnMsg = $_POST['RtnMsg'];
+            $order->save();
+
+            $user = User::find($order->user_id);
+            $user->coin = $user->coin + $bought_coin;
+            $user->save();
+
+        }
     }
 
     public function showMenu()
     {
-        return view('addValue',
-            [
-                'items' => ['60 Diamonds', '165 Diamonds', '360 Diamonds', '650 Diamonds', '1500 Diamonds'],
-                'price' => [60, 150, 300, 500, 1000],
-            ]);
-
-    }
-
-    private function storeOrder(Request $request)
-    {
-
-
+        return view('addValue', $this->menu);
     }
 
     public function sentOrder(Request $request)
     {
+//        dd('test');
         $name = $request['Name'];
         $price = $request['Price'];
         $currency = $request['Currency'];
@@ -70,10 +85,6 @@ class OpayController extends Controller {
             $obj->Send['ChoosePayment'] = \PaymentMethod::Credit;                           //付款方式:Credit
 
             //訂單的商品資料
-
-            array_push($obj->Send['Items'], array('Name' => $name, 'price' => (int) $price,
-                'Currency' => $currency, 'Quantity' => (int) $quantity, 'URL' => "none"));
-
             Order::forceCreate([
                 'user_id' => Auth::user()->id,
                 'MerchantID' => $merchantID,
@@ -83,6 +94,11 @@ class OpayController extends Controller {
                 'Unit_price' => (int) $price,
                 'TradeAmt' => (int) $price * (int) $quantity,
             ]);
+
+
+            array_push($obj->Send['Items'], array('Name' => $name, 'price' => (int) $price,
+                'Currency' => $currency, 'Quantity' => (int) $quantity, 'URL' => "none"));
+
 
             //Credit信用卡分期付款延伸參數(可依系統需求選擇是否代入)
             //以下參數不可以跟信用卡定期定額參數一起設定
@@ -117,10 +133,8 @@ class OpayController extends Controller {
             $obj->SendExtend['InvType'] = InvType::General;
             */
 
-
             //產生訂單(auto submit至AllPay)
             $obj->CheckOut();
-
 
         } catch (Exception $e)
         {

@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('getresponse', 'OpayController@test');
+Route::get('getresponse', 'OpayController@checkOrder');
 
 Auth::routes();
 
