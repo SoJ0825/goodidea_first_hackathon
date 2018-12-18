@@ -16,4 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::post('getresponse', 'OpayController@checkOrder');
+
+Route::middleware('login')->post('login', 'ApiUsersController@login');
+Route::post('logout', 'ApiUsersController@logout');
+Route::post('register', 'ApiUsersController@store');
