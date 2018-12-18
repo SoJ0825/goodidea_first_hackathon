@@ -29,32 +29,11 @@ class ApiUsersController extends Controller {
 
     public function logout(Request $request)
     {
-        $validator = Validator::make(
-
-            $request->all(),
-
-            [
-                'api_token' => 'required|string|max:32',
-            ]
-
-        );
-
-        if ($validator->fails())
-        {
-            $error_message = $validator->errors()->first();
-
-            return response(['result' => 'false', 'response' => $error_message]);
-        }
-
-        if ($user = User::all()->where('api_token', $request['api_token'])->first())
-        {
+            $user = User::find(session('id'));
             $user->api_token = null;
             $user->save();
 
             return ['result' => 'true', 'response' => 'Logout success'];
-        }
-
-        return ['result' => 'false', 'response' => 'User not login'];
 
     }
 

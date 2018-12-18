@@ -20,5 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('getresponse', 'OpayController@checkOrder');
 
 Route::middleware('login')->post('login', 'ApiUsersController@login');
-Route::post('logout', 'ApiUsersController@logout');
 Route::post('register', 'ApiUsersController@store');
+
+Route::middleware('checkApiToken')->group(function () {
+    Route::post('logout', 'ApiUsersController@logout');
+    Route::post('addcoin', 'CoinController@addCoin');
+});
