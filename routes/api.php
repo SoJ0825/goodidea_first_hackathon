@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 Route::post('getresponse', 'OpayController@checkOrder');
 
@@ -26,5 +26,6 @@ Route::middleware('checkApiToken')->group(function () {
     Route::post('logout', 'ApiUsersController@logout');
     Route::middleware('validateGameRecord')->post('addcoin', 'CoinController@addCoin');
     Route::middleware('validateGameRecord')->post('minuscoin', 'CoinController@minusCoin');
+    Route::post('showrecord/{gameid}', 'GameRecordController@show');
 });
 
