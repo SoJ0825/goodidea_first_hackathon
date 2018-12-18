@@ -5,15 +5,18 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
+
 
 class User extends Authenticatable
 {
     use Notifiable;
 
-    public function ()
-    {
-
-    }
+//    public function boughtCoin($value)
+//    {
+//        $this->coin += $value;
+//        $this->save();
+//    }
 
     /**
      * The attributes that are mass assignable.

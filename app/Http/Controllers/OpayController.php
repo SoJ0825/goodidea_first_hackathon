@@ -15,7 +15,7 @@ class OpayController extends Controller {
         'price' => [60, 150, 300, 500, 1000],
     ];
 
-    public function checkOrder()
+    public function checkOrder(Request $request)
     {
         $myfile = fopen("info.txt", "w") or die("Unable to open file!");
         $txt = print_r($_POST, true);
@@ -38,9 +38,8 @@ class OpayController extends Controller {
             $order->save();
 
             $user = User::find($order->user_id);
-            $user->coin = $user->coin + $bought_coin;
+            $user->coin += $bought_coin;
             $user->save();
-
         }
     }
 
@@ -60,8 +59,8 @@ class OpayController extends Controller {
         $merchantID = '2000132';
         $merchantTradeNo = "KaoTest" . time();
 
-        $returnURL = 'http://182b12c9.ngrok.io/api/getresponse';
-        $clientBackURL = 'http://182b12c9.ngrok.io/home';
+        $returnURL = 'http://ad341901.ngrok.io/api/getresponse';
+        $clientBackURL = 'http://ad341901.ngrok.io/home';
         include('AllPay.Payment.Integration.php');
         try
         {

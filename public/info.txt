@@ -1,17 +1,17 @@
 Array
 (
     [MerchantID] => 2000132
-    [MerchantTradeNo] => KaoTest1545073692
-    [PayAmt] => 150
-    [PaymentDate] => 2018/12/18 03:08:23
+    [MerchantTradeNo] => KaoTest1545111385
+    [PayAmt] => 60
+    [PaymentDate] => 2018/12/18 13:36:45
     [PaymentType] => Credit_CreditCard
-    [PaymentTypeChargeFee] => 2
+    [PaymentTypeChargeFee] => 1
     [RedeemAmt] => 0
     [RtnCode] => 1
     [RtnMsg] => 交易成功
     [SimulatePaid] => 0
-    [TradeAmt] => 150
-    [TradeDate] => 2018/12/18 03:08:12
-    [TradeNo] => 1812180308124142
-    [CheckMacValue] => 4930C3C74EA239AFF131248DF93F8ED8C736767308E90CD5B52C1C823E597252
+    [TradeAmt] => 60
+    [TradeDate] => 2018/12/18 13:36:25
+    [TradeNo] => 1812181336254199
+    [CheckMacValue] => 1513BB6BE775B1DF2B374390042D33C5405137181D0770FFEE01C75FA80C4B4B
 )
