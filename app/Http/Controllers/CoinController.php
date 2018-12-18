@@ -14,4 +14,11 @@ class CoinController extends Controller {
         $user->coin += $request['profit'];
         $user->save();
     }
+
+    public function minusCoin(Request $request)
+    {
+        $user = User::find(session('id'));
+        $user->coin -= $request['loss'];
+        $user->save();
+    }
 }
