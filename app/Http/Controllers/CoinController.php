@@ -26,11 +26,19 @@ class CoinController extends Controller {
     public function minusCoin(Request $request)
     {
         $user = User::find(session('id'));
-        $user->coin = $user->coin - $request['loss'] < 0 ? 0 : $user->coin - $request['loss'] ;
+        $user->coin = $user->coin - $request['loss'] < 0 ? 0 : $user->coin - $request['loss'];
         $user->save();
 
         GameRecordController::gameRecord($request);
 
         return response(['result' => 'true', 'coin' => $user->coin]);
     }
+
+    public function showCoin(Request $request)
+    {
+        $user = User::find(session('id'));
+
+        return response(['result' => 'true', 'coin' => $user->coin]);
+    }
+
 }
