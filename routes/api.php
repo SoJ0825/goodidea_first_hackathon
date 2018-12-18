@@ -29,5 +29,6 @@ Route::middleware('checkApiToken')->group(function () {
     Route::middleware('validateGameRecord')->post('minuscoin', 'CoinController@minusCoin');
     Route::post('showrecord/{gameid}', 'GameRecordController@show');
     Route::post('getachievement', 'AchievementController@getAchievement');
+    Route::post('showachievement', 'AchievementController@showAchievement');
 });
 

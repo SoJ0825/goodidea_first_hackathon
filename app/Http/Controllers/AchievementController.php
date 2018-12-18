@@ -18,27 +18,36 @@ class AchievementController extends Controller {
                 'bool' => 'required|bool',
             ],
             [
-                'achievement.regex' => 'The :attribute format is allWin , loss10Time, luckyAce, poorYou or lovelyQueen.'
+                'achievement.regex' => 'The :attribute format is allWin , loss10Time, luckyAce, poorYou or lovelyQueen.',
             ]
         );
 
-        if ($validator->fails()) {
+        if ($validator->fails())
+        {
             return response(['result' => 'false', 'response' => $validator->errors()->first()], 400);
         }
-            $achievement = Achievement::select('user_id', $request['achievement'])
-                ->where('user_id', session('id'))
+        $achievement = Achievement::select('user_id', $request['achievement'])
+            ->where('user_id', session('id'))
 //                ->where($request['achievement'], $request['achievement'])
-                ->first();
+            ->first();
 
-            if ($request['bool'] && $achievement[$request['achievement']] == false)
-            {
-                Achievement::where('user_id', session('id'))->update([
-                   $request['achievement'] => $request['bool'],
-                ]);
+        if ($request['bool'] && $achievement[$request['achievement']] == false)
+        {
+            Achievement::where('user_id', session('id'))->update([
+                $request['achievement'] => $request['bool'],
+            ]);
 
-                return response(['result' => 'true', 'response' => 'You get this achievement.']);
-            }
+            return response(['result' => 'true', 'response' => 'You get this achievement.']);
+        }
 
         return response(['result' => 'false', 'response' => 'You have this achievement.']);
+    }
+
+    public function showAchievement(Request $request)
+    {
+        $achievement = Achievement::select(
+                    'user_id', 'allWin', 'loss10Time', 'luckyAce', 'poorYou', 'lovelyQueen', 'winTwice', 'play10Time')
+                        ->where('user_id', session('id'))->first();
+        return response(['result' => 'true', 'response' => $achievement]);
     }
 }
