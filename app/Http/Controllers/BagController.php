@@ -46,13 +46,31 @@ class BagController extends Controller {
                 $user->coin = $user->coin - ((int) $item['quantity'] * (int) $merchandise['price']);
                 $user->save();
                 $results['result'] = "true";
-                array_push($results['response'] , "You buy {$item['quantity']} {$item['name']}");
+                array_push($results['response'], "You buy {$item['quantity']} {$item['name']}");
                 continue;
             }
             $results['result'] = "false";
-            array_push($results['response'] ,"You have not enough coin");
+            array_push($results['response'], "You have not enough coin");
         }
 
         return response($results);
+    }
+
+    public function showItem(Request $request)
+    {
+
+        $user_items = User::find(session('id'))->bag()->get(['item_id', 'quantity']);
+
+        $items = [];
+        foreach ($user_items as $user_item)
+        {
+            $item = Item::select('name')->where('id', $user_item['item_id'])->first();
+            array_push($items, [
+                "name" => $item->name,
+                "quantity" => $user_item['quantity'],
+            ]);
+        }
+
+        return response(['result' => 'true', 'response' => $items]);
     }
 }
