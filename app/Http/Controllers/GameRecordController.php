@@ -14,7 +14,7 @@ class GameRecordController extends Controller {
         switch ($gameid)
         {
             case 1:
-                $records = AlberRecord::all()->where('user_id', session('id'));
+                $records = AlberRecord::where('user_id', session('id'))->orderBy('created_at', 'desc')->get();
                 $results = [];
                 foreach ($records as $record)
                 {
@@ -22,7 +22,7 @@ class GameRecordController extends Controller {
                 }
                 break;
             case 2:
-                $records = LesterRecord::all()->where('user_id', session('id'));
+                $records = LesterRecord::where('user_id', session('id'))->orderBy('created_at', 'desc')->get();
                 $results = [];
                 foreach ($records as $record)
                 {
