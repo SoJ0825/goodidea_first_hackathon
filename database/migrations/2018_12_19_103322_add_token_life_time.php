@@ -27,7 +27,7 @@ class AddTokenLifeTime extends Migration
     {
         //
         Schema::table('users', function (Blueprint $table) {
-            $table->string('token_lifetime');
+            $table->dropColumn('token_lifetime');
         });
     }
 }
