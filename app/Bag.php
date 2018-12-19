@@ -6,14 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bag extends Model {
 
-    //
+    protected $fillable = [
+        'user_id', 'item_id', 'quantity',
+    ];   //
+
     public function item()
     {
-        return $this->hasMany('App\Item');
+        return $this->belongsTo('App\Item');
     }
 
     public function user()
     {
-        return $this->hasMany('App\User');
+        return $this->belongsTo('App\User');
     }
 }

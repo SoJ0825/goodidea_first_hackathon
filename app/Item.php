@@ -9,6 +9,6 @@ class Item extends Model
     //
     public function bag()
     {
-        return $this->belongsTo('App\Bag');
+        return $this->hasMany('App\Bag');
     }
 }

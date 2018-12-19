@@ -14,7 +14,7 @@ class User extends Authenticatable {
 
     public function bag()
     {
-        return $this->belongsTo('App\Bag');
+        return $this->hasMany('App\Bag');
     }
 
 //    public function boughtCoin($value)
