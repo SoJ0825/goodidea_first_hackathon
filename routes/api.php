@@ -34,5 +34,6 @@ Route::middleware('checkApiToken')->group(function () {
     Route::post('checkwin', 'AchievementController@setWinTwice');
     Route::post('buyitem', 'BagController@buyItem');
     Route::post('showitem', 'BagController@showItem');
+    Route::post('useitem', 'BagController@useItem');
 });
 

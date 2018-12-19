@@ -56,6 +56,30 @@ class BagController extends Controller {
         return response($results);
     }
 
+    public function useItem(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|exists:Items'
+            ]
+        );
+
+        if ($validator->fails())
+        {
+            $error_message = $validator->errors()->first();
+
+            return response(['result' => 'false', 'response' => $error_message]);
+        }
+
+        $item_id = Item::select('id')->where('name', $request['name'])->first();
+        $item = User::find(session('id'))->bag()->where('item_id', $item_id->id )->first();
+        $item->quantity -= 1;
+        $item->save();
+
+        return response(['result' => 'true', 'response' => ['name' => $request['name'], 'quantity' => $item->quantity]]);
+    }
+
     public function showItem(Request $request)
     {
 

@@ -28,14 +28,14 @@
           <entry key="css" value="6" />
           <entry key="env" value="4" />
           <entry key="log" value="7" />
-          <entry key="php" value="892" />
+          <entry key="php" value="896" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Blade" value="134" />
           <entry key="CSS" value="6" />
-          <entry key="PHP" value="758" />
+          <entry key="PHP" value="762" />
           <entry key="PLAIN_TEXT" value="11" />
         </counts>
       </usages-collector>
@@ -44,14 +44,14 @@
           <entry key="css" value="8" />
           <entry key="env" value="188" />
           <entry key="log" value="599" />
-          <entry key="php" value="119805" />
+          <entry key="php" value="121868" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Blade" value="23369" />
           <entry key="CSS" value="8" />
-          <entry key="PHP" value="96436" />
+          <entry key="PHP" value="98499" />
           <entry key="PLAIN_TEXT" value="787" />
         </counts>
       </usages-collector>
@@ -70,8 +70,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BagController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="666">
-              <caret line="74" column="67" selection-start-line="74" selection-start-column="67" selection-end-line="74" selection-end-column="67" />
+            <state relative-caret-position="412">
+              <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
               <folding>
                 <element signature="e#40#68#0#PHP" expanded="true" />
               </folding>
@@ -147,9 +147,9 @@
         <option value="$PROJECT_DIR$/database/migrations/2018_12_19_103322_add_token_life_time.php" />
         <option value="$PROJECT_DIR$/app/Http/Kernel.php" />
         <option value="$PROJECT_DIR$/app/Bag.php" />
-        <option value="$PROJECT_DIR$/routes/api.php" />
         <option value="$PROJECT_DIR$/app/Item.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/BagController.php" />
+        <option value="$PROJECT_DIR$/routes/api.php" />
       </list>
     </option>
   </component>
@@ -456,12 +456,12 @@
       <workItem from="1545015956990" duration="4105000" />
       <workItem from="1545022902067" duration="45599000" />
       <workItem from="1545128514245" duration="30574000" />
-      <workItem from="1545186691043" duration="22308000" />
+      <workItem from="1545186691043" duration="24931000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="110446000" />
+    <option name="totallyTimeSpent" value="113069000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -768,13 +768,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/api.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2018_12_19_113511_create_items_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="836">
@@ -819,10 +812,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes/api.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="722">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BagController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="74" column="67" selection-start-line="74" selection-start-column="67" selection-end-line="74" selection-end-column="67" />
+        <state relative-caret-position="412">
+          <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
           <folding>
             <element signature="e#40#68#0#PHP" expanded="true" />
           </folding>
