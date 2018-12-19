@@ -133,7 +133,7 @@ class ApiUsersController extends Controller {
         return response(['result' => 'true',
             'response' => [
                 'name' => $user->name,
-                'coin' => $user->coin,
+                'coin' => (int)$user->coin,
                 'api_token' => $user->api_token,
             ]]);
     }
