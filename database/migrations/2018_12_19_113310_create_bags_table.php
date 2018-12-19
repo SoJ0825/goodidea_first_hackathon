@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddApiToken extends Migration
+class CreateBagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class AddApiToken extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('api_token')->nullable()->after('coin');
+        Schema::create('bags', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('user_id');
+            $table->string('item_id');
+            $table->string('quantity');
+            $table->timestamps();
         });
     }
 
@@ -26,8 +29,6 @@ class AddApiToken extends Migration
      */
     public function down()
     {
-         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('api_token');
-        });
+        Schema::dropIfExists('bags');
     }
 }

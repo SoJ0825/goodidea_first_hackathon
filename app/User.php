@@ -8,21 +8,26 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
+
     use Notifiable;
 
-//    public function boughtCoin($value)
-//    {
-//        $this->coin += $value;
-//        $this->save();
-//    }
+    public function bag()
+    {
+        return $this->belongsTo('App\Bag');
+    }
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+//    public function boughtCoin($value)
+////    {
+////        $this->coin += $value;
+////        $this->save();
+////    }
+
+        /**
+         * The attributes that are mass assignable.
+         *
+         * @var array
+         */
     protected $fillable = [
         'name', 'email', 'password',
     ];
