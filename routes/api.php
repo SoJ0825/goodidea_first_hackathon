@@ -23,6 +23,7 @@ Route::middleware('login')->post('login', 'ApiUsersController@login');
 Route::post('register', 'ApiUsersController@store');
 
 Route::middleware('checkApiToken')->group(function () {
+    Route::post('update', 'ApiUsersController@update');
     Route::post('logout', 'ApiUsersController@logout');
     Route::post('showcoin', 'CoinController@showCoin');
     Route::middleware('validateGameRecord')->post('addcoin', 'CoinController@addCoin');
@@ -30,5 +31,6 @@ Route::middleware('checkApiToken')->group(function () {
     Route::post('showrecord/{gameid}', 'GameRecordController@show');
     Route::post('getachievement', 'AchievementController@getAchievement');
     Route::post('showachievement', 'AchievementController@showAchievement');
+    Route::post('checkwin', 'AchievementController@setWinTwice');
 });
 

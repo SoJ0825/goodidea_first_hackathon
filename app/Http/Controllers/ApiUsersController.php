@@ -106,9 +106,35 @@ class ApiUsersController extends Controller {
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|string|max:20',
+            ]
+        );
+
+        if ($validator->fails())
+        {
+            $error_message = $validator->errors()->first();
+
+            return response(['result' => 'false', 'response' => $error_message]);
+        }
+
+         User::find(session('id'))->update([
+                'name' => $request->name,
+            ]);
+
+        $user = User::find(session('id'));
+
+        return response(['result' => 'true',
+            'response' => [
+                'name' => $user->name,
+                'coin' => $user->coin,
+                'api_token' => $user->api_token,
+            ]]);
     }
 
     public function destroy($id)
