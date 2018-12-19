@@ -33,6 +33,12 @@ class CheckApiToken {
 
         if ($user = User::all()->where('api_token', $request['api_token'])->first())
         {
+            if (time() - $user->token_lifetime < 1200 || $user->token_lifetime == null)
+            {
+                $user->token_lifetime = time();
+                $user->save();
+            }
+
             session()->put('id', $user->id);
             return $next($request);
         }

@@ -65,6 +65,7 @@ class ApiUsersController extends Controller {
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'api_token' => (new Token())->unique('users', 'api_token', 32),
+                'token_lifetime' => time(),
             ]
         );
 
