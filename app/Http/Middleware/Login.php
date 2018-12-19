@@ -12,6 +12,8 @@ class Login {
 
     public function handle($request, Closure $next, $guard = null)
     {
+
+        $token_invalid_time = '1200';
         $validator = Validator::make(
 
             $request->all(),
@@ -38,12 +40,14 @@ class Login {
         }
 
         $user = $request->user();
-        $user->api_token = (new Token())->unique('users', 'api_token', 32);
+
+        if (time() - $user->token_lifetime > $token_invalid_time)
+        {
+            $user->api_token = (new Token())->unique('users', 'api_token', 32);
+        }
+        $user->token_lifetime = time();
         $user->save();
 
-       
-//        echo 'login/////';
         return $next($request);
-//        return $response;
     }
 }
