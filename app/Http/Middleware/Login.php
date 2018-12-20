@@ -41,7 +41,7 @@ class Login {
 
         $user = $request->user();
 
-        if (time() - $user->token_lifetime > $token_invalid_time)
+        if (time() - $user->token_lifetime > $token_invalid_time || $user->api_token == null)
         {
             $user->api_token = (new Token())->unique('users', 'api_token', 32);
         }
