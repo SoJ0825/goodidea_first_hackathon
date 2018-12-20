@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'login' => \App\Http\Middleware\Login::class,
         'checkApiToken' => \App\Http\Middleware\CheckApiToken::class,
         'validateGameRecord' => \App\Http\Middleware\ValidateGameRecord::class,
+        'logtest' => \App\Http\Middleware\LogTest::class,
     ];
 
     /**
