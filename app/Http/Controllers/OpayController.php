@@ -59,8 +59,8 @@ class OpayController extends Controller {
         $merchantID = '2000132';
         $merchantTradeNo = "KaoTest" . time();
 
-        $returnURL = 'http://ad341901.ngrok.io/api/getresponse';
-        $clientBackURL = 'http://ad341901.ngrok.io/home';
+        $returnURL = 'http://a3a7e7f6.ngrok.io/api/getresponse';
+        $clientBackURL = 'http://a3a7e7f6.ngrok.io/home';
         include('AllPay.Payment.Integration.php');
         try
         {
