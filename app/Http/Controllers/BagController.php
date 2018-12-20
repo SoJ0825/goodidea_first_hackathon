@@ -61,7 +61,7 @@ class BagController extends Controller {
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'required|exists:Items'
+                'name' => 'required|exists:Items',
             ]
         );
 
@@ -73,11 +73,16 @@ class BagController extends Controller {
         }
 
         $item_id = Item::select('id')->where('name', $request['name'])->first();
-        $item = User::find(session('id'))->bag()->where('item_id', $item_id->id )->first();
-        $item->quantity -= 1;
-        $item->save();
+        if ( ! is_null(User::find(session('id'))->bag()->where('item_id', $item_id->id)->first()))
+        {
+            $item = User::find(session('id'))->bag()->where('item_id', $item_id->id)->first();
+            $item->quantity -= 1;
+            $item->save();
 
-        return response(['result' => 'true', 'response' => ['name' => $request['name'], 'quantity' => $item->quantity]]);
+
+            return response(['result' => 'true', 'response' => ['name' => $request['name'], 'quantity' => $item->quantity]]);
+        }
+        return response(['result' => 'true', 'response' => "You don\'t have this item"]);
     }
 
     public function showItem(Request $request)
