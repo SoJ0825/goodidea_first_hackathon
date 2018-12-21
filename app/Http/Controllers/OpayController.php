@@ -59,8 +59,8 @@ class OpayController extends Controller {
         $merchantID = '2000132';
         $merchantTradeNo = "KaoTest" . time();
 
-        $returnURL = 'http://a3a7e7f6.ngrok.io/api/getresponse';
-        $clientBackURL = 'http://a3a7e7f6.ngrok.io/home';
+        $returnURL = 'http://moneygame.sckao.space/api/getresponse';
+        $clientBackURL = 'http://moneygame.sckao.space/home';
         include('AllPay.Payment.Integration.php');
         try
         {
