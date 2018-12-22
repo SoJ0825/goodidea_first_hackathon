@@ -18,7 +18,7 @@ class BagController extends Controller {
             [
                 'items' => 'required|array',
                 'items.*' => 'required|array',
-                'items.*.name' => 'required|exists:Items|string',
+                'items.*.name' => 'required|exists:items|string',
                 'items.*.quantity' => 'required|string',
             ]
         );
