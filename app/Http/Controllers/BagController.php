@@ -61,7 +61,7 @@ class BagController extends Controller {
         $validator = Validator::make(
             $request->all(),
             [
-                'name' => 'required|exists:Items',
+                'name' => 'required|exists:items',
             ]
         );
 
