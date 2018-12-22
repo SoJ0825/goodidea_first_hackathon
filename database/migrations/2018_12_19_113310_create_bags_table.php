@@ -17,7 +17,7 @@ class CreateBagsTable extends Migration
             $table->increments('id');
             $table->string('user_id');
             $table->string('item_id');
-            $table->string('quantity');
+            $table->string('quantity')->default('0');
             $table->timestamps();
         });
     }
