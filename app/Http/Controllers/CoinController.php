@@ -21,10 +21,10 @@ class CoinController extends Controller {
         $user->save();
 
         $achievement = Achievement::all()->where('user_id', session('id'))->first();
-        $results = ['result' => 'true',
-            'coin' => $user->coin,
-            'winTwice' => $achievement['winTwice'],
-            'play10Time' => $achievement['play10Time']];
+        $results = ['result'     => 'true',
+                    'coin'       => $user->coin,
+                    'winTwice'   => $achievement['winTwice'],
+                    'play10Time' => $achievement['play10Time']];
         GameRecordController::gameRecord($request);
         if (AchievementController::setWinTwice($request))
         {
@@ -67,10 +67,10 @@ class CoinController extends Controller {
         $user->save();
 
         $achievement = Achievement::all()->where('user_id', session('id'))->first();
-        $results = ['result' => 'true',
-            'coin' => $user->coin,
-            'winTwice' => $achievement['winTwice'],
-            'play10Time' => $achievement['play10Time']];
+        $results = ['result'     => 'true',
+                    'coin'       => $user->coin,
+                    'winTwice'   => $achievement['winTwice'],
+                    'play10Time' => $achievement['play10Time']];
         GameRecordController::gameRecord($request);
 
         switch ($request['game'])
@@ -106,8 +106,13 @@ class CoinController extends Controller {
     function showCoin(Request $request)
     {
         $user = User::find(session('id'));
+        $achievement = Achievement::all()->where('user_id', session('id'))->first();
+        $results = ['result'     => 'true',
+                    'coin'       => $user->coin,
+                    'winTwice'   => $achievement['winTwice'],
+                    'play10Time' => $achievement['play10Time']];
 
-        return response(['result' => 'true', 'coin' => $user->coin]);
+        return response($results);
     }
 
 }
