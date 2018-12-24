@@ -37,11 +37,12 @@ class CheckApiToken {
             {
                 $user->token_lifetime = time();
                 $user->save();
-            }
+                session()->put('id', $user->id);
 
-            session()->put('id', $user->id);
-            return $next($request);
+                return $next($request);
+            }
         }
-            return response(['result' => 'false', 'response' => 'User not login']);
+
+        return response(['result' => 'false', 'response' => 'User not login']);
     }
 }
