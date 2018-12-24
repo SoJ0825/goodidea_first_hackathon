@@ -26,7 +26,7 @@ class AchievementController extends Controller {
 
         if ($validator->fails())
         {
-            return response(['result' => 'false', 'response' => $validator->errors()->first()], 400);
+            return response(['result' => 'false', 'error_message' => $validator->errors()->first()], 400);
         }
         $achievement = Achievement::select('user_id', $request['achievement'])
             ->where('user_id', session('id'))
@@ -42,7 +42,7 @@ class AchievementController extends Controller {
             return response(['result' => 'true', 'response' => 'You get this achievement.']);
         }
 
-        return response(['result' => 'false', 'response' => 'You have this achievement.']);
+        return response(['result' => 'false', 'error_message' => 'You have this achievement.']);
     }
 
     public function showAchievement(Request $request)

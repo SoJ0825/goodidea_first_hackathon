@@ -29,7 +29,7 @@ class ValidateGameRecord {
         {
             $error_message = $validator->errors()->first();
 
-            return response(['result' => 'false', 'response' => $error_message]);
+            return response(['result' => 'false', 'error_message' => $error_message]);
         }
 
         return $next($request);

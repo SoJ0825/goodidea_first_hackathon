@@ -27,7 +27,7 @@ class BagController extends Controller {
         {
             $error_message = $validator->errors()->first();
 
-            return response(['result' => 'false', 'response' => $error_message]);
+            return response(['result' => 'false', 'error_message' => $error_message]);
         }
         $results['response'] = [];
         foreach ($request['items'] as $item)
@@ -69,7 +69,7 @@ class BagController extends Controller {
         {
             $error_message = $validator->errors()->first();
 
-            return response(['result' => 'false', 'response' => $error_message]);
+            return response(['result' => 'false', 'error_message' => $error_message]);
         }
 
         $item_id = Item::select('id')->where('name', $request['name'])->first();

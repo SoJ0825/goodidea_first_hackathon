@@ -56,7 +56,7 @@ class ApiUsersController extends Controller {
         {
             $error_message = $validator->errors()->first();
 
-            return response(['result' => 'false', 'response' => $error_message]);
+            return response(['result' => 'false', 'error_message' => $error_message]);
         }
 
 //        dd((new Token())->unique('users', 'api_token', 32));
@@ -121,7 +121,7 @@ class ApiUsersController extends Controller {
         {
             $error_message = $validator->errors()->first();
 
-            return response(['result' => 'false', 'response' => $error_message]);
+            return response(['result' => 'false', 'error_message' => $error_message]);
         }
 
          User::find(session('id'))->update([

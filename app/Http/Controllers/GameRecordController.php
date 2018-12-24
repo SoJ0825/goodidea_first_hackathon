@@ -30,7 +30,7 @@ class GameRecordController extends Controller {
                 }
                 break;
             default:
-                return response(['result' => 'false', 'response' => "The game doesn\'t exist"]);
+                return response(['result' => 'false', 'error_message' => "The game doesn\'t exist"]);
         }
 
         if (count($results) > 0)
@@ -38,7 +38,7 @@ class GameRecordController extends Controller {
             return response(['result' => 'true', 'response' => $results]);
         }
         
-        return response(['result' => 'false', 'response' => 'no record']);
+        return response(['result' => 'false', 'error_message' => 'no record']);
     }
     
     public static function gameRecord($request)

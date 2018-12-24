@@ -29,14 +29,14 @@ class Login {
         {
             $error_message = $validator->errors()->first();
 
-            return response(['result' => 'false', 'response' => $error_message]);
+            return response(['result' => 'false', 'error_message' => $error_message]);
         }
 
 //        $response = $next($request);
         $credentials = $request->only('email', 'password');
         if ( ! Auth::attempt($credentials))
         {
-            return response(['result' => 'false', 'response' => 'Please check your account or password']);
+            return response(['result' => 'false', 'error_message' => 'Please check your account or password']);
         }
 
         $user = $request->user();
