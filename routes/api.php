@@ -23,7 +23,7 @@ Route::middleware('login')->post('login', 'ApiUsersController@login');
 Route::post('register', 'ApiUsersController@store');
 Route::get('showstoreitem', 'StoreItemController@showStoreItem');
 
-Route::middleware('logtest', 'checkApiToken')->group(function () {
+Route::middleware('checkApiToken')->group(function () {
     Route::post('update', 'ApiUsersController@update');
     Route::post('logout', 'ApiUsersController@logout');
     Route::post('showcoin', 'CoinController@showCoin');
@@ -36,8 +36,4 @@ Route::middleware('logtest', 'checkApiToken')->group(function () {
     Route::post('buyitem', 'BagController@buyItem');
     Route::post('showitem', 'BagController@showItem');
     Route::post('useitem', 'BagController@useItem');
-});
-
-Route::middleware('logtest')->post('test', function (){
-    return response(['result' => 'test']);
 });
