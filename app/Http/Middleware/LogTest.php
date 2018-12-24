@@ -16,7 +16,7 @@ class LogTest
      */
     public function handle($request, Closure $next)
     {
-        Log::info($request->method(), $request->input());
+        Log::info($request->method(), $request->input(), $request->path());
 
         $response = $next($request);
 //        dd('mi');
