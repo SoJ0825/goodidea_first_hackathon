@@ -15,27 +15,17 @@ class GameRecordController extends Controller {
         {
             case 1:
                 $records = AlberRecord::where('user_id', session('id'))->orderBy('created_at', 'desc')->get();
-                $results = [];
-                foreach ($records as $record)
-                {
-                    array_push($results, array($record));
-                }
                 break;
             case 2:
                 $records = LesterRecord::where('user_id', session('id'))->orderBy('created_at', 'desc')->get();
-                $results = [];
-                foreach ($records as $record)
-                {
-                    array_push($results, array($record));
-                }
                 break;
             default:
                 return response(['result' => 'false', 'error_message' => "The game doesn\'t exist"]);
         }
 
-        if (count($results) > 0)
+        if (count($records) > 0)
         {
-            return response(['result' => 'true', 'response' => $results]);
+            return response(['result' => 'true', 'response' => $records]);
         }
         
         return response(['result' => 'false', 'error_message' => 'no record']);

@@ -16,9 +16,9 @@ class BagController extends Controller {
         $validator = Validator::make(
             $request->all(),
             [
-                'items' => 'required|array',
-                'items.*' => 'required|array',
-                'items.*.name' => 'required|exists:items|string',
+                'items'            => 'required|array',
+                'items.*'          => 'required|array',
+                'items.*.name'     => 'required|exists:items|string',
                 'items.*.quantity' => 'required|string',
             ]
         );
@@ -29,30 +29,36 @@ class BagController extends Controller {
 
             return response(['result' => 'false', 'error_message' => $error_message]);
         }
-        $results['response'] = [];
+
+        $total_price = 0;
         foreach ($request['items'] as $item)
         {
-
             $merchandise = Item::all()->where('name', $item['name'])->first();
-            $user = User::find(session('id'));
-            if ($user->coin - ((int) $item['quantity'] * (int) $merchandise['price']) > 0)
+            $total_price += $merchandise->price;
+        }
+
+        $user = User::find(session('id'));
+        if ($user->coin >= $total_price)
+        {
+            $results = [];
+            foreach ($request['items'] as $item)
             {
+                $merchandise = Item::all()->where('name', $item['name'])->first();
                 $bag = Bag::updateOrCreate([
                     'user_id' => session('id'),
                     'item_id' => $merchandise['id'],
                 ]);
                 $bag->increment('quantity', $item['quantity']);
 
-                $user->coin = $user->coin - ((int) $item['quantity'] * (int) $merchandise['price']);
+                $user->coin = $user->coin - ((int)$item['quantity'] * (int)$merchandise['price']);
                 $user->save();
                 $results['result'] = "true";
-                array_push($results['response'], "You buy {$item['quantity']} {$item['name']}");
-                continue;
+                $results['response'][] = "You buy {$item['quantity']} {$item['name']}";
             }
-            $results['result'] = "false";
-            array_push($results['response'], "You have not enough coin");
+            return response($results);
         }
-
+        $results['result'] = "false";
+        $results['error_message'][] = "You have not enough coin";
         return response($results);
     }
 
@@ -87,10 +93,12 @@ class BagController extends Controller {
                 return response(['result' => 'true', 'response' => ['name' => $request['name'], 'quantity' => $item->quantity]]);
             }
         }
+
         return response(['result' => 'true', 'response' => "You don\'t have this item"]);
     }
 
-    public function showItem(Request $request)
+    public
+    function showItem(Request $request)
     {
 
         $user_items = User::find(session('id'))->bag()->get(['item_id', 'quantity']);
@@ -100,7 +108,7 @@ class BagController extends Controller {
         {
             $item = Item::select('name')->where('id', $user_item['item_id'])->first();
             array_push($items, [
-                "name" => $item->name,
+                "name"     => $item->name,
                 "quantity" => $user_item['quantity'],
             ]);
         }

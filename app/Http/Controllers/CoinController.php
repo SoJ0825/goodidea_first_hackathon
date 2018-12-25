@@ -16,6 +16,20 @@ class CoinController extends Controller {
     //
     public function addCoin(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                "profit" => "required|integer|min:1|digits_between:0,10"
+            ]
+        );
+
+        if ($validator->fails())
+        {
+            $error_message = $validator->errors()->first();
+
+            return response(['result' => 'false', 'error_message' => $error_message]);
+        }
+
         $user = User::find(session('id'));
         $user->coin += $request['profit'];
         $user->save();
@@ -63,6 +77,24 @@ class CoinController extends Controller {
     function minusCoin(Request $request)
     {
         $user = User::find(session('id'));
+        $validator = Validator::make(
+            $request->all(),
+            [
+                "loss" => "required|integer|min:1|max:".$user->coin."|digits_between:0,10"
+            ],
+            [
+                "loss.max" => "You don\'t have enough money."
+            ]
+        );
+
+        if ($validator->fails())
+        {
+            $error_message = $validator->errors()->first();
+
+            return response(['result' => 'false', 'error_message' => $error_message]);
+        }
+
+
         $user->coin = $user->coin - $request['loss'] < 0 ? 0 : $user->coin - $request['loss'];
         $user->save();
 

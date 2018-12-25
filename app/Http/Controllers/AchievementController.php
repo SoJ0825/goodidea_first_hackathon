@@ -16,8 +16,8 @@ class AchievementController extends Controller {
             $request->all(),
             [
                 'achievement' => ['required', 'string', 'regex:(allWin|loss10Time|luckyAce|poorYou|lovelyQueen)'],
-                'api_token' => 'required|string|max:32',
-                'bool' => 'required|bool',
+                'api_token'   => 'required|string|min:32|max:32',
+                'bool'        => 'required|bool',
             ],
             [
                 'achievement.regex' => 'The :attribute format is allWin , loss10Time, luckyAce, poorYou or lovelyQueen.',
@@ -26,14 +26,14 @@ class AchievementController extends Controller {
 
         if ($validator->fails())
         {
-            return response(['result' => 'false', 'error_message' => $validator->errors()->first()], 400);
+            return response(['result' => 'false', 'error_message' => $validator->errors()->first()]);
         }
         $achievement = Achievement::select('user_id', $request['achievement'])
             ->where('user_id', session('id'))
 //                ->where($request['achievement'], $request['achievement'])
             ->first();
 
-        if ($request['bool'] && $achievement[$request['achievement']] == false)
+        if ($achievement[$request['achievement']] == false)
         {
             Achievement::where('user_id', session('id'))->update([
                 $request['achievement'] => $request['bool'],
@@ -42,7 +42,12 @@ class AchievementController extends Controller {
             return response(['result' => 'true', 'response' => 'You get this achievement.']);
         }
 
-        return response(['result' => 'false', 'error_message' => 'You have this achievement.']);
+        if ( ! $request['bool'])
+        {
+            return response(['result' => 'false', 'error_message' => 'The bool field must be true.']);
+        }
+
+        return response(['result' => 'false', 'error_message' => 'You already have this achievement.']);
     }
 
     public function showAchievement(Request $request)
