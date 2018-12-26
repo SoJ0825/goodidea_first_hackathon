@@ -43,11 +43,25 @@ class BagController extends Controller {
             $results = [];
             foreach ($request['items'] as $item)
             {
+                switch ($item['name'])
+                {
+                    case 'winForDouble':
+                    case 'likeABoss':
+                        $game_id = 2;
+                        break;
+                    case 'randomBonus':
+                        $game_id = 1;
+                        break;
+                }
                 $merchandise = Item::all()->where('name', $item['name'])->first();
                 $bag = Bag::updateOrCreate([
                     'user_id' => session('id'),
                     'item_id' => $merchandise['id'],
-                ]);
+                ],
+                    [
+                        'game_id' => $game_id,
+                    ]
+                );
                 $bag->increment('quantity', $item['quantity']);
 
                 $user->coin = $user->coin - ((int)$item['quantity'] * (int)$merchandise['price']);
@@ -55,10 +69,12 @@ class BagController extends Controller {
                 $results['result'] = "true";
                 $results['response'][] = "You buy {$item['quantity']} {$item['name']}";
             }
+
             return response($results);
         }
         $results['result'] = "false";
         $results['error_message'][] = "You have not enough coin";
+
         return response($results);
     }
 
@@ -97,11 +113,23 @@ class BagController extends Controller {
         return response(['result' => 'true', 'response' => "You don\'t have this item"]);
     }
 
-    public
-    function showItem(Request $request)
+    public function showItem(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'game_id' => 'required|integer|min:1|max:2',
+            ]
+        );
 
-        $user_items = User::find(session('id'))->bag()->get(['item_id', 'quantity']);
+        if ($validator->fails())
+        {
+            $error_message = $validator->errors()->first();
+
+            return response(['result' => 'false', 'error_message' => $error_message]);
+        }
+
+        $user_items = User::find(session('id'))->bag()->where('game_id', $request->game_id)->get(['item_id', 'quantity']);
 
         $items = [];
         foreach ($user_items as $user_item)
